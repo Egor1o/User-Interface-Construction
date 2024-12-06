@@ -33,6 +33,7 @@
     ]
   },
   "devDependencies": {
+    "tailwindcss": "^3.4.16",
     "web-vitals": "^4.2.4"
   }
 }
