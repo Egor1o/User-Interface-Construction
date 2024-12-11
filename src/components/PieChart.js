@@ -60,7 +60,7 @@ const PieChart = () => {
         callbacks: {
           label: (tooltipItem) => {
             const value = tooltipItem.raw;
-            return `${value.toFixed(2)} kWh`;
+            return `${value} kWh`;
           },
         },
       },
