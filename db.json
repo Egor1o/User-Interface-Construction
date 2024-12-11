@@ -2,11 +2,11 @@
   "consumption": [
     {
       "name": "TV",
-      "consumption": "21.780000000000005",
+      "consumption": 21.780000000000005,
       "id": "7cab"
     },
     {
-      "name": "Fridge",
+      "name": "Refrigerator",
       "consumption": 80.2,
       "id": "a27e"
     },

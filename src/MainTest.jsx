@@ -1,10 +1,14 @@
-import React from 'react'
-import BarChart from './components/BarChart'
+import React from "react";
+import BarChart from "./components/BarChart";
+import PieChart from "./components/PieChart";
 
 const MainTest = () => {
-    return (
-        <BarChart />
-    )
-}
+  return (
+    <div className="flex flex-row">
+      <BarChart />
+      <PieChart />
+    </div>
+  );
+};
 
-export default MainTest
+export default MainTest;
