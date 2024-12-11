@@ -2,6 +2,7 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Card from "./Card";
+
 const responsive = {
     desktop: {
         breakpoint: { max: 3000, min: 1024 },
@@ -19,10 +20,11 @@ const responsive = {
         slidesToSlide: 1
     }
 };
+
 const sliderImageUrl = [
     {
         url:
-            "https://i2.wp.com/www.geeksaresexy.net/wp-content/uploads/2020/04/movie1.jpg?resize=600%2C892&ssl=1"
+            "https://www.carlroth.com/medias/TY09-1-01-1000Wx1000H?context=bWFzdGVyfGltYWdlc3w3NzYxMHxpbWFnZS9qcGVnfGFXMWhaMlZ6TDJobU1DOW9PV012T1RBek56RXpOVGszTURNek5DNXFjR2N8Y2E2MTgyNDdlNjE3MGNjYTE0MTc2MTE3ODgzYWRmM2E1MzZkMmQwYjk5YjY2NjUxOWZmYzgxNWViMjVmYjA4MQ"
     },
     {
         url:
@@ -40,20 +42,20 @@ const sliderImageUrl = [
 
     {
         url:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTdvuww0JDC7nFRxiFL6yFiAxRJgM-1tvJTxA&usqp=CAU"
+        "https://m.media-amazon.com/images/I/3136b-51UqL._AC_UF1000,1000_QL80_.jpg"
     }
 ];
 const Slider = () => {
     return (
-        <div className="parent h-full items-center justify-center w-3/4">
+        <div className="parent h-full items-center justify-center w-5/6">
             <Carousel
                 responsive={responsive}
                 autoPlay={true}
                 swipeable={true}
                 draggable={true}
-                showDots={true}
                 infinite={true}
                 partialVisible={false}
+
             >
                 {sliderImageUrl.map((imageUrl, index) => {
                     return (
