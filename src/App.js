@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"; // Import Navigate
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Layout from "./Layout";
 import DryingCabinet from "./DryingCabinet";
 import Tv from "./devices/Tv";
