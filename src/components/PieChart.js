@@ -59,18 +59,34 @@ const PieChart = () => {
       tooltip: {
         callbacks: {
           label: (tooltipItem) => {
+            const totalConsumption = data.datasets[0].data.reduce(
+              (sum, val) => sum + val,
+              0
+            );
+
             const value = tooltipItem.raw;
-            return `${value} kWh`;
+            const consumptionPercentage = (value / totalConsumption) * 100;
+            return `${consumptionPercentage.toFixed(2)} %`;
+          },
+          footer: () => {
+            return "Click to configure";
           },
         },
       },
+    },
+    onClick: (event, elements) => {
+      if (elements.length > 0) {
+        const index = elements[0].index;
+        const device = data.labels[index];
+        window.location.href = `/${device.toLowerCase()}`;
+      }
     },
   };
 
   return (
     <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-lg">
       <h1 className="mb-6 text-3xl font-bold text-center">
-        Energy Consumption Distribution
+        Electricity Consumption Distribution
       </h1>
       <Pie data={data} options={options} />
     </div>

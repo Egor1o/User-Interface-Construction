@@ -6,7 +6,7 @@ const Tv = () => {
     const [screenType, setScreenType] = useState("")
     const [screenSize, setScreenSize] = useState("50")
     const [dailyUse, setDailyUse] = useState("3")
-    const [consumption, setConsumption] = useState("")
+    const [consumption, setConsumption] = useState(0)
     const [devices, setDevices] = useState([])
     const [isCalculated, setIsCalculated] = useState(false)
 
@@ -36,7 +36,7 @@ const Tv = () => {
         event.preventDefault()
         const tv = {
             name: 'TV',
-            consumption: `${consumption}`
+            consumption: consumption
         }
         if (!devices.map(device => device.name).includes('TV')) {
             await axios.post('http://localhost:3001/consumption', tv)

@@ -2,7 +2,7 @@
   "consumption": [
     {
       "name": "TV",
-      "consumption": "21.780000000000005",
+      "consumption": 21.780000000000005,
       "id": "7cab"
     },
     {

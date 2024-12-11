@@ -3,7 +3,7 @@ import axios from "axios";
 
 const Refrigerator = () => {
   const [compartments, setCompartments] = useState([]);
-  const [consumption, setConsumption] = useState("");
+  const [consumption, setConsumption] = useState(0);
   const [devices, setDevices] = useState([]);
   const [isCalculated, setIsCalculated] = useState(false);
 
@@ -55,7 +55,7 @@ const Refrigerator = () => {
       .map(calculateCompartmentConsumption)
       .reduce((sum, c) => sum + c, 0);
 
-    setConsumption(totalConsumption.toFixed(2));
+    setConsumption(totalConsumption);
     setIsCalculated(true);
     const response = await axios.get("http://localhost:3001/consumption");
     setDevices(response.data);
@@ -65,7 +65,7 @@ const Refrigerator = () => {
     event.preventDefault();
     const refrigerator = {
       name: "Refrigerator",
-      consumption: `${consumption}`,
+      consumption: consumption,
     };
     if (!devices.map((device) => device.name).includes("Refrigerator")) {
       await axios.post("http://localhost:3001/consumption", refrigerator);
@@ -239,7 +239,8 @@ const Refrigerator = () => {
       {isCalculated && (
         <div>
           <p className="mt-6 mb-6 text-xl font-semibold text-center text-green-600">
-            On average, your refrigerator consumes {consumption} kWh a month
+            On average, your refrigerator consumes {consumption.toFixed(2)} kWh
+            a month
           </p>
           <button
             onClick={handleSaving}
