@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Layout from "./Layout";
 import DryingCabinet from "./DryingCabinet";
 import Tv from './devices/Tv'
+import MainTest from './MainTest'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route exact path="/" element={<Layout/>}/>
           <Route path="/drying-cabinet" element={<DryingCabinet/>}/>
           <Route path="/tv" element={<Tv />}/>
+          <Route path="/maintest" element={<MainTest />}/>
         </Routes>
       </BrowserRouter>
   );
