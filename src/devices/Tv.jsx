@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axios from 'axios'
 
 const Tv = () => {
 
@@ -6,6 +7,7 @@ const Tv = () => {
     const [screenSize, setScreenSize] = useState("50")
     const [dailyUse, setDailyUse] = useState("3")
     const [consumption, setConsumption] = useState("")
+    const [devices, setDevices] = useState([])
     const [isCalculated, setIsCalculated] = useState(false)
 
     const handleSelection = (event) => {
@@ -20,14 +22,27 @@ const Tv = () => {
         setDailyUse(event.target.value)
     }
 
-    const handleCalculation = (event) => {
+    const handleCalculation = async (event) => {
         event.preventDefault()
 
-        if (screenType && screenSize && dailyUse) {
-            setConsumption(screenType * screenSize * screenSize * dailyUse * 30 / 1000)
-            setIsCalculated(true)
+        const newConsumption = screenType * screenSize * screenSize * dailyUse * 30 / 1000
+        setConsumption(newConsumption)
+        setIsCalculated(true)
+        const response = await axios.get('http://localhost:3001/consumption')
+        setDevices(response.data)
+    }
+
+    const handleSaving = async (event) => {
+        event.preventDefault()
+        const tv = {
+            name: 'TV',
+            consumption: `${consumption}`
+        }
+        if (!devices.map(device => device.name).includes('TV')) {
+            await axios.post('http://localhost:3001/consumption', tv)
         } else {
-            alert("Please, provide calculator with the info.")
+            const tvToUpdate = devices.find(device => device.name === 'TV')
+            await axios.put(`http://localhost:3001/consumption/${tvToUpdate.id}`, tv)
         }
     }
 
@@ -103,11 +118,17 @@ const Tv = () => {
                     </button>
                 </div>
             </form>
-
+            
             {isCalculated && (
-                <p className="mt-6 text-xl font-semibold text-center text-green-600">
-                    On average, your TV consumes {consumption.toFixed(2)} kWh a month
-                </p>
+                <div>
+                    <p className="mt-6 mb-6 text-xl font-semibold text-center text-green-600">
+                        On average, your TV consumes {consumption.toFixed(2)} kWh a month
+                    </p>
+                    <button 
+                        onClick={handleSaving}
+                        className={"w-full py-3 font-semibold rounded-md transition duration-200 bg-blue-500 text-white hover:bg-blue-600"}
+                        >Set as my case</button>
+                </div>
             )}
         </div>
     )
