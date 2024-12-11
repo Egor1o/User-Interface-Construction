@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"; // Import Navigate
 import Layout from "./Layout";
 import DryingCabinet from "./DryingCabinet";
 import Tv from "./devices/Tv";
@@ -11,11 +11,39 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Layout />} />
-        <Route path="/drying-cabinet" element={<DryingCabinet />} />
-        <Route path="/tv" element={<Tv />} />
-        <Route path="/refrigerator" element={<Refrigerator />} />
-        <Route path="/maintest" element={<MainTest />} />
+        <Route path="/" element={<Navigate to="/maintest" />} />
+        <Route
+          path="/drying-cabinet"
+          element={
+            <Layout>
+              <DryingCabinet />
+            </Layout>
+          }
+        />
+        <Route
+          path="/tv"
+          element={
+            <Layout>
+              <Tv />
+            </Layout>
+          }
+        />
+        <Route
+          path="/refrigerator"
+          element={
+            <Layout>
+              <Refrigerator />
+            </Layout>
+          }
+        />
+        <Route
+          path="/maintest"
+          element={
+            <Layout>
+              <MainTest />
+            </Layout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
