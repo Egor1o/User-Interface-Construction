@@ -28,6 +28,12 @@ const Navbar = () => {
             Drying Cabinet
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/dishwasher" className={activeStyling}>
+            Dishwasher
+          </NavLink>
+        </li>
+
       </ul>
     </nav>
   );
