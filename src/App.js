@@ -7,12 +7,21 @@ import Tv from "./devices/Tv";
 import MainTest from "./MainTest";
 import Refrigerator from "./devices/Refrigerator";
 import Sauna from "./devices/Sauna";
+import Dishwasher from "./devices/Dishwasher";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/maintest" />} />
+        <Route
+          path="/dishwasher"
+          element={
+            <Layout>
+              <Dishwasher />
+            </Layout>
+          }
+        />
         <Route
           path="/drying-cabinet"
           element={
