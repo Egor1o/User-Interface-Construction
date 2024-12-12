@@ -9,8 +9,8 @@ const Navbar = () => {
     <nav className="p-4 bg-blue-500">
       <ul className="flex justify-center space-x-8">
         <li>
-          <NavLink to="/maintest" className={activeStyling}>
-            Main Test / Dashboard
+          <NavLink to="/dashboard" className={activeStyling}>
+            Dashboard
           </NavLink>
         </li>
         <li>
