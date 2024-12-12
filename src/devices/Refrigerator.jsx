@@ -1,11 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
-const Refrigerator = () => {
-  const [compartments, setCompartments] = useState([]);
-  const [consumption, setConsumption] = useState(0);
-  const [devices, setDevices] = useState([]);
-  const [isCalculated, setIsCalculated] = useState(false);
+const Refrigerator = ({compartments, setCompartments, consumption, setConsumption, devices, setDevices, isCalculated, setIsCalculated, setValue}) => {
+
 
   const addCompartment = () => {
     setCompartments([
@@ -55,6 +52,8 @@ const Refrigerator = () => {
       .map(calculateCompartmentConsumption)
       .reduce((sum, c) => sum + c, 0);
 
+    setValue(totalConsumption)
+
     setConsumption(totalConsumption);
     setIsCalculated(true);
     const response = await axios.get("http://localhost:3001/consumption");
@@ -81,7 +80,7 @@ const Refrigerator = () => {
   };
 
   return (
-    <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-lg">
+    <div className="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-lg border">
       <h1 className="mb-6 text-3xl font-bold text-center">
         Refrigerator Monthly Electricity Consumption
       </h1>

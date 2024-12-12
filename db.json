@@ -7,13 +7,18 @@
     },
     {
       "name": "Refrigerator",
-      "consumption": 80.2,
+      "consumption": 41.666666666666664,
       "id": "a27e"
     },
     {
       "name": "Microwave",
       "consumption": 10.5,
       "id": "9995"
+    },
+    {
+      "name": "DryingCabinet",
+      "consumption": 35.5,
+      "id": "9996"
     }
   ]
 }
