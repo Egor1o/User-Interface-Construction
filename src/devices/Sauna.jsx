@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 const Sauna = () => {
   const [power, setPower] = useState(6); // kW
@@ -24,6 +25,27 @@ const Sauna = () => {
   const consumption = power * totalDuration;
 
   const averageConsumption = 20; // kWh, daily avg in Finland
+
+  const saveToDatabase = async (event) => {
+    event.preventDefault();
+    const response = await axios.get("http://localhost:3001/consumption");
+    const devices = response.data;
+    const sauna = {
+      name: "Sauna",
+      consumption: consumption,
+    };
+    if (!devices.map((device) => device.name).includes("Sauna")) {
+      await axios.post("http://localhost:3001/consumption", sauna);
+    } else {
+      const saunaToUpdate = devices.find(
+        (device) => device.name === "Sauna"
+      );
+      await axios.put(
+        `http://localhost:3001/consumption/${saunaToUpdate.id}`,
+        sauna
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
@@ -151,6 +173,16 @@ const Sauna = () => {
           <p className="text-sm text-gray-600">
             This is about {(consumption / averageConsumption * 100).toFixed(1)}% of the average daily electricity consumption in Finland.
           </p>
+        </div>
+
+        {/* Save */}
+        <div className="mt-4">
+          <button
+            onClick={saveToDatabase}
+            className={`px-4 py-2 rounded ${useMeasurements ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          >
+            Save
+          </button>
         </div>
       </div>
     </div>

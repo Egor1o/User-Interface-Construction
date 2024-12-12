@@ -1,0 +1,24 @@
+{
+  "consumption": [
+    {
+      "name": "TV",
+      "consumption": 21.780000000000005,
+      "id": "7cab"
+    },
+    {
+      "name": "Refrigerator",
+      "consumption": 80.2,
+      "id": "a27e"
+    },
+    {
+      "name": "Microwave",
+      "consumption": 10.5,
+      "id": "9995"
+    },
+    {
+      "name": "Sauna",
+      "consumption": 15,
+      "id": "99d8"
+    }
+  ]
+}
