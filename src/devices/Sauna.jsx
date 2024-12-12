@@ -3,13 +3,16 @@ import axios from "axios";
 
 const Sauna = () => {
   const [power, setPower] = useState(6); // kW
-  const [volume, setVolume] = useState(15); // m³
+  const [volume, setVolume] = useState(5); // m³
   const [targetTemp, setTargetTemp] = useState(80); // °C
   const [userDuration, setUserDuration] = useState(1); // hours
-  const [length, setLength] = useState(2); // meters
-  const [width, setWidth] = useState(2); // meters
-  const [height, setHeight] = useState(2.5); // meters
+  const [length, setLength] = useState(1.5); // meters
+  const [width, setWidth] = useState(1.5); // meters
+  const [height, setHeight] = useState(2.2); // meters
   const [useMeasurements, setUseMeasurements] = useState(false); // Toggle between volume and measurements
+  const [monthlyN, setMonthlyN] = useState(4); // How many times a month
+
+  const [showToast, setShowToast] = useState(false); // For save success
 
   const startTemp = 20; // °C
   const efficiencyConstant = 100; // Arbitrary
@@ -22,9 +25,10 @@ const Sauna = () => {
   const calculatedVolume = length * width * height;
 
   const totalDuration = preHeatDuration + userDuration;
-  const consumption = power * totalDuration;
+  const consumption = monthlyN * power * totalDuration;
 
-  const averageConsumption = 20; // kWh, daily avg in Finland
+  const averageDailyUse = 10; // Average daily electricity use in Finland (kWh)
+  const averageMonthlyUse = averageDailyUse * 30;
 
   const saveToDatabase = async (event) => {
     event.preventDefault();
@@ -45,6 +49,9 @@ const Sauna = () => {
         sauna
       );
     }
+    // Show toast
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
   };
 
   return (
@@ -95,7 +102,7 @@ const Sauna = () => {
               onChange={(e) => setVolume(Number(e.target.value))}
               className="w-full p-2 border rounded"
             />
-            <p className="text-gray-600 flex justify-end">Typical: 10-20 m³</p>
+            <p className="text-gray-600 flex justify-end">Typical: 4-10 m³</p>
           </div>
         ) : (
           <div className="mt-4">
@@ -131,7 +138,7 @@ const Sauna = () => {
             </div>
             <div className="flex justify-between text-gray-600">
               <p>Room Volume: {calculatedVolume.toFixed(2)} m³</p>
-              <p>Typical: 10-20 m³</p>
+              <p>Typical: 4-10 m³</p>
             </div>
           </div>
         )}
@@ -165,13 +172,29 @@ const Sauna = () => {
         />
         <p className="text-gray-600">Selected: {userDuration} hours</p>
 
+        {/* Monthly use */}
+        <label className="block mt-4 mb-2 font-medium">How many times a month?</label>
+        <input
+          type="range"
+          min="1"
+          max="30"
+          step="1"
+          value={monthlyN}
+          onChange={(e) => setMonthlyN(Number(e.target.value))}
+          className="w-full"
+        />
+        <div className="flex justify-between text-gray-600">
+          <p>Selected: {monthlyN} times</p>
+          <p>Typical: 2-8</p>
+        </div>
+
         {/* Results */}
         <div className="mt-6 p-4 bg-gray-100 rounded">
           <p className="text-lg font-bold">Pre-heat Duration: {preHeatDuration.toFixed(2)} hours</p>
           <p className="text-lg font-bold">Total Duration: {totalDuration.toFixed(2)} hours</p>
           <p className="text-lg font-bold">Estimated Consumption: {consumption.toFixed(2)} kWh</p>
           <p className="text-sm text-gray-600">
-            This is about {(consumption / averageConsumption * 100).toFixed(1)}% of the average daily electricity consumption in Finland.
+            This is about {(consumption / averageMonthlyUse * 100).toFixed(1)}% of the average monthly electricity consumption in Finland.
           </p>
         </div>
 
@@ -179,11 +202,18 @@ const Sauna = () => {
         <div className="mt-4">
           <button
             onClick={saveToDatabase}
-            className={`px-4 py-2 rounded ${useMeasurements ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-4 py-2 rounded primary bg-blue-500 text-white`}
           >
             Save
           </button>
         </div>
+
+        {/* Toast */}
+        {showToast && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
+            Saved successfully!
+          </div>
+        )}
       </div>
     </div>
   );
