@@ -2,7 +2,7 @@
   "consumption": [
     {
       "name": "TV",
-      "consumption": 21.780000000000005,
+      "consumption": 76.5,
       "id": "7cab"
     },
     {
@@ -24,6 +24,11 @@
       "name": "Sauna",
       "consumption": 15,
       "id": "99d8"
+    },
+    {
+      "name": "Dishwasher",
+      "consumption": 30.24,
+      "id": "9997"
     }
   ]
 }

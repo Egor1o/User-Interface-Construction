@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ProgressBar from '../components/ProgressBar'; 
 import InfoBox from '../components/InfoBox'; 
+import axios from "axios";
 
 const Dishwasher = () => {
 
@@ -16,6 +17,8 @@ const Dishwasher = () => {
     { name: "F", power: 2500, time: 2.1 }, 
     { name: "G", power: 2900, time: 2.1 }, 
   ];
+
+  const [showToast, setShowToast] = useState(false); // For save success
 
   const [selectedModel, setSelectedModel] = useState(dishwashers[2]);
 
@@ -51,6 +54,31 @@ const Dishwasher = () => {
   };
 
 
+  const saveToDatabase = async (event) => {
+    event.preventDefault();
+    const response = await axios.get("http://localhost:3001/consumption");
+    const devices = response.data;
+    const dishwasher = {
+      name: "Dishwasher",
+      consumption: monthlyConsumption,
+    };
+    if (!devices.map((device) => device.name).includes("Dishwasher")) {
+      await axios.post("http://localhost:3001/consumption", dishwasher);
+    } else {
+      const washerToUpdate = devices.find(
+        (device) => device.name === "Dishwasher"
+      );
+      await axios.put(
+        `http://localhost:3001/consumption/${washerToUpdate.id}`,
+        dishwasher
+      );
+    }
+
+    // Show toast
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
+
 
   return (
     <div className="">
@@ -59,7 +87,7 @@ const Dishwasher = () => {
         <p className="text-black text-2xl font-bold mb-4">
           Dishwasher Electricity Consumption
         </p>
-        <div className="bg-white bg-opacity-80 backdrop-blur-lg rounded-lg w-[50vw] p-6 flex flex-col items-center justify-center shadow-lg">
+        <div className="bg-white bg-opacity-80 backdrop-blur-lg rounded-lg max-w-4xl p-6 flex flex-col items-center justify-center shadow-lg">
 
         {/* Model Selector */}
         <div className="mb-6 w-full">
@@ -99,7 +127,7 @@ const Dishwasher = () => {
           {/* Power Slider */}
           <div className="mb-6 w-full">
             <label className="block text-black font-semibold mb-2">
-              Times washed in one week: {freq}
+              Number of washes in one week: {freq} 
             </label>
             <input
               type="range"
@@ -164,8 +192,33 @@ const Dishwasher = () => {
           </div>
 
              <ProgressBar percentage={percentage} info="of the average monthly household electricity usage in Finland" />
+
+           <div className="mt-4 w-full">
+           <button
+             onClick={saveToDatabase}
+             className={`px-4 py-2 rounded primary bg-blue-500 text-white w-full flex justify-center relative 
+                        `}
+           >
+          <p>
+            Save consumption details
+            </p>
+            <p className="absolute right-4">
+              →
+            </p>
+          </button>
+
+        </div>
+
           </div>
         </div>
+
+        {/* Toast */}
+        {showToast && (
+          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
+            Saved successfully!
+          </div>
+        )}
+
       </div>
     </div>
   );
