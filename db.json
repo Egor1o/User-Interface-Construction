@@ -16,6 +16,11 @@
       "id": "9995"
     },
     {
+      "name": "DryingCabinet",
+      "consumption": 35.5,
+      "id": "9996"
+    },
+    {
       "name": "Sauna",
       "consumption": 15,
       "id": "99d8"

@@ -27,7 +27,6 @@ const BarChart = () => {
         const fetchData = async () => {
             const response = await axios.get('http://localhost:3001/consumption')
             const data = response.data
-            console.log(data)
 
             const labels = data.map(device => device.name)
             const consumptionData = data.map(device => device.consumption)
@@ -42,13 +41,15 @@ const BarChart = () => {
                             'rgba(75, 192, 192, 0.6)',
                             'rgba(153, 102, 255, 0.6)',
                             'rgba(255, 159, 64, 0.6)',
-                            'rgba(217, 255, 64, 0.6)'
+                            'rgba(217, 255, 64, 0.6)',
+                            'rgba(255, 124, 87, 0.6)'
                         ],
                         borderColor: [
                             'rgba(75, 192, 192, 1)',
                             'rgba(153, 102, 255, 1)',
                             'rgba(255, 159, 64, 1)',
-                            'rgba(96, 113, 28, 1)'
+                            'rgba(96, 113, 28, 1)',
+                            'rgba(255, 124, 87, 1)'
                         ],
                         borderWidth: 1
                     }

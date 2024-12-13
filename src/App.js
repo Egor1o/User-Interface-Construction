@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Layout from "./Layout";
-import DryingCabinet from "./DryingCabinet";
+import DryingCabinet from "./devices/DryingCabinet";
 import Tv from "./devices/Tv";
 import Dashboard from "./Dashboard";
 import Refrigerator from "./devices/Refrigerator";
