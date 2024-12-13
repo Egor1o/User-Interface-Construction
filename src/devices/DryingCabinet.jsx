@@ -1,6 +1,5 @@
 import Slider from "../Slider";
 import { useEffect, useState } from "react";
-import Refrigerator from "./Refrigerator";
 import Calculator from "../components/Calculator";
 import axios from "axios";
 
@@ -10,6 +9,7 @@ function DryingCabinet() {
     const [consumption, setConsumption] = useState(0);
     const [devices, setDevices] = useState([]);
     const [isCalculated, setIsCalculated] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false); // New state for success
 
     const handleSaving = async (event) => {
         event.preventDefault();
@@ -17,16 +17,22 @@ function DryingCabinet() {
             name: "Drying-cabinet",
             consumption: consumption,
         };
-        if (!devices.map((device) => device.name).includes("Drying-cabinet")) {
-            await axios.post("http://localhost:3001/consumption", dryingCabinet);
-        } else {
-            const dryingCabinetToUpdate = devices.find(
-                (device) => device.name === "Drying-cabinet"
-            );
-            await axios.put(
-                `http://localhost:3001/consumption/${dryingCabinetToUpdate.id}`,
-                dryingCabinet
-            );
+        try {
+            if (!devices.map((device) => device.name).includes("Drying-cabinet")) {
+                await axios.post("http://localhost:3001/consumption", dryingCabinet);
+            } else {
+                const dryingCabinetToUpdate = devices.find(
+                    (device) => device.name === "Drying-cabinet"
+                );
+                await axios.put(
+                    `http://localhost:3001/consumption/${dryingCabinetToUpdate.id}`,
+                    dryingCabinet
+                );
+            }
+            setIsSuccess(true); // Set success to true
+            setTimeout(() => setIsSuccess(false), 3000); // Remove success icon after 3 seconds
+        } catch (error) {
+            console.error("Error saving data:", error);
         }
     };
 
@@ -53,7 +59,7 @@ function DryingCabinet() {
                                 setIsCalculated={setIsCalculated}
                             />
                         </div>
-                        <div className="flex flex-col items-center w-2/4">
+                        <div className="flex flex-col items-center w-2/4 fixed top-20 scroll-mt-10 right-0">
                             <div className="shadow-md flex flex-col justify-between rounded-t-2xl bg-gray-100 sticky w-3/4 top-0">
                                 <h1 className="text-2xl font-bold p-4 self-center">Total Consumption</h1>
                                 <div className="flex flex-col min-h-[150px] items-center mt-4 overflow-y-auto max-h-80">
@@ -95,6 +101,23 @@ function DryingCabinet() {
                                     >
                                         Set as my case
                                     </button>
+                                    {isSuccess && (
+                                        <div className="flex items-center mt-4 text-green-500">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-6 w-6 mr-2"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 00-1.414 0L7 13.586 4.707 11.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l9-9a1 1 0 000-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                            <p>Success!</p>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -107,7 +130,7 @@ function DryingCabinet() {
                     }`}
                 >
                     <h1 className="text-2xl mt-20">Choose device from the list</h1>
-                    <Slider/>
+                    <Slider />
                     <div className="mt-10 mb-36 flex flex-col justify-center items-center ">
                         <h1 className="text-2xl font-bold">Or</h1>
                         <button
