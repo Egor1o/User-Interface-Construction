@@ -1,6 +1,8 @@
-import Slider from "./Slider";
+import Slider from "../Slider";
 import { useEffect, useState } from "react";
-import Refrigerator from "./devices/Refrigerator";
+import Refrigerator from "./Refrigerator";
+import Calculator from "../components/Calculator";
+import axios from "axios";
 
 function DryingCabinet() {
     const [customChosen, setCustomChosen] = useState(false);
@@ -8,7 +10,25 @@ function DryingCabinet() {
     const [consumption, setConsumption] = useState(0);
     const [devices, setDevices] = useState([]);
     const [isCalculated, setIsCalculated] = useState(false);
-    const [value, setValue] = useState(0.0);
+
+    const handleSaving = async (event) => {
+        event.preventDefault();
+        const dryingCabinet = {
+            name: "Drying-cabinet",
+            consumption: consumption,
+        };
+        if (!devices.map((device) => device.name).includes("Drying-cabinet")) {
+            await axios.post("http://localhost:3001/consumption", dryingCabinet);
+        } else {
+            const dryingCabinetToUpdate = devices.find(
+                (device) => device.name === "Drying-cabinet"
+            );
+            await axios.put(
+                `http://localhost:3001/consumption/${dryingCabinetToUpdate.id}`,
+                dryingCabinet
+            );
+        }
+    };
 
     useEffect(() => {
         console.log(consumption, compartments, devices, isCalculated);
@@ -22,8 +42,7 @@ function DryingCabinet() {
                 >
                     <div className="relative w-full h-full flex flex-row mt-16">
                         <div className="w-2/4 ml-10">
-                            <Refrigerator
-                                setValue={setValue}
+                            <Calculator
                                 compartments={compartments}
                                 setCompartments={setCompartments}
                                 consumption={consumption}
@@ -37,7 +56,7 @@ function DryingCabinet() {
                         <div className="flex flex-col items-center w-2/4">
                             <div className="shadow-md flex flex-col justify-between rounded-t-2xl bg-gray-100 sticky w-3/4 top-0">
                                 <h1 className="text-2xl font-bold p-4 self-center">Total Consumption</h1>
-                                <div className="flex flex-col min-h-[150px] items-center mt-4">
+                                <div className="flex flex-col min-h-[150px] items-center mt-4 overflow-y-auto max-h-80">
                                     {compartments.map((elem, index) => (
                                         <div
                                             key={index}
@@ -54,7 +73,7 @@ function DryingCabinet() {
                                                     <path d="M11 3L4 14h6l-1 7L16 6h-5l1-3z" />
                                                 </svg>
                                                 <p className="text-lg text-green-600 font-bold">
-                                                    Average consumption: {(value/compartments.length).toFixed(2)} kWh
+                                                    Average consumption: {elem.consumption ? elem.consumption.toFixed(2) : 0.0} kWh
                                                 </p>
                                             </div>
                                         </div>
@@ -66,6 +85,18 @@ function DryingCabinet() {
                                     </p>
                                 </div>
                             </div>
+                            {isCalculated && (
+                                <div className="flex flex-col justify-center items-center">
+                                    <button
+                                        onClick={handleSaving}
+                                        className={
+                                            "p-3 mt-4 font-semibold rounded-md transition duration-200 bg-green-500 text-white hover:bg-blue-600"
+                                        }
+                                    >
+                                        Set as my case
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -77,7 +108,7 @@ function DryingCabinet() {
                 >
                     <h1 className="text-2xl mt-20">Choose device from the list</h1>
                     <Slider/>
-                    <div className="mt-10 mb-36 flex flex-col justify-center items-center">
+                    <div className="mt-10 mb-36 flex flex-col justify-center items-center ">
                         <h1 className="text-2xl font-bold">Or</h1>
                         <button
                             className="p-3 bg-blue-500 rounded-full text-white text-lg mt-4"
