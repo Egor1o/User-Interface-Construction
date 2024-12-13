@@ -1,17 +1,26 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Layout from "./Layout";
 import DryingCabinet from "./devices/DryingCabinet";
 import Tv from "./devices/Tv";
-import MainTest from "./MainTest";
+import Dashboard from "./Dashboard";
 import Refrigerator from "./devices/Refrigerator";
+import Sauna from "./devices/Sauna";
+import Dishwasher from "./devices/Dishwasher";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/maintest" />} />
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route
+          path="/dishwasher"
+          element={
+            <Layout>
+              <Dishwasher />
+            </Layout>
+          }
+        />
         <Route
           path="/drying-cabinet"
           element={
@@ -37,10 +46,18 @@ function App() {
           }
         />
         <Route
-          path="/maintest"
+          path="/sauna"
           element={
             <Layout>
-              <MainTest />
+              <Sauna />
+            </Layout>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <Layout>
+              <Dashboard />
             </Layout>
           }
         />
