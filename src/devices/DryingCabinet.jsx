@@ -1,4 +1,4 @@
-import Slider from "../Slider";
+import Slider from "../components/Slider";
 import { useEffect, useState } from "react";
 import Calculator from "../components/Calculator";
 import axios from "axios";
@@ -130,7 +130,24 @@ function DryingCabinet() {
                     }`}
                 >
                     <h1 className="text-2xl mt-20">Choose device from the list</h1>
-                    <Slider />
+                    <Slider devices={devices} setSuccess={setIsSuccess}/>
+                    {isSuccess && (
+                        <div className="flex items-center mt-4 text-green-500">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6 mr-2"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M16.707 5.293a1 1 0 00-1.414 0L7 13.586 4.707 11.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l9-9a1 1 0 000-1.414z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                            <p>Success!</p>
+                        </div>
+                    )}
                     <div className="mt-10 mb-36 flex flex-col justify-center items-center ">
                         <h1 className="text-2xl font-bold">Or</h1>
                         <button
