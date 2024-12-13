@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 
 const Calculator = ({
                         compartments,
@@ -8,14 +8,11 @@ const Calculator = ({
                         setDevices,
                         setIsCalculated,
                     }) => {
-    const [compartmentConsumptions, setCompartmentConsumptions] = useState([]);
-
     const addCompartment = () => {
         setCompartments([
             ...compartments,
             { height: 100, width: 100, depth: 100, temperature: 30, usageHours: 2 },
         ]);
-
     };
 
     const removeCompartment = (index) => {
@@ -39,9 +36,10 @@ const Calculator = ({
         const volume = calculateVolume(compartment);
 
         const baseConsumptionPerHour = 0.2; // kWh per hour per liter
-        const hourlyConsumption = volume * baseConsumptionPerHour
+        const hourlyConsumption = volume * baseConsumptionPerHour;
+        const temperatureFactor = Math.pow(1.025, compartment.temperature - 30);
 
-        const monthlyConsumption = hourlyConsumption * compartment.usageHours * 30 * 0.003; // 30 days in a month
+        const monthlyConsumption = hourlyConsumption * compartment.usageHours * 30 * temperatureFactor * 0.003; // 30 days in a month
         return monthlyConsumption;
     };
 
@@ -50,7 +48,6 @@ const Calculator = ({
             const consumptions = compartments.map(calculateCompartmentConsumption);
             const totalConsumption = consumptions.reduce((sum, c) => sum + c, 0);
 
-            setCompartmentConsumptions(consumptions);
             setConsumption(totalConsumption);
             setIsCalculated(true);
 
@@ -70,7 +67,6 @@ const Calculator = ({
             }
         } else {
             setConsumption(0);
-            setCompartmentConsumptions([]);
             setIsCalculated(false);
         }
     }, [compartments]);
@@ -128,8 +124,8 @@ const Calculator = ({
                                     <p>
                                         Monthly consumption:{" "}
                                         <span className="font-bold">
-                      {compartmentConsumptions[index]?.toFixed(2) ?? 0} kWh
-                    </span>
+                                            {compartment.consumption?.toFixed(2) ?? 0} kWh
+                                        </span>
                                     </p>
                                 </div>
 
@@ -244,7 +240,6 @@ const Calculator = ({
                     </div>
                 </div>
             </form>
-
         </div>
     );
 };
