@@ -27,8 +27,7 @@ const Sauna = () => {
   const totalDuration = preHeatDuration + userDuration;
   const consumption = monthlyN * power * totalDuration;
 
-  const averageDailyUse = 10; // Average daily electricity use in Finland (kWh)
-  const averageMonthlyUse = averageDailyUse * 30;
+  const averageMonthlyUse = 100;
 
   const saveToDatabase = async (event) => {
     event.preventDefault();
@@ -56,11 +55,11 @@ const Sauna = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
-      <h1 className="text-3xl font-bold text-center mb-4">Sauna Electricity Calculator</h1>
+      <h1 className="text-3xl font-bold text-center mb-4">Sauna Electricity Consumption</h1>
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-lg">
         
         {/* Stove power */}
-        <label className="block mb-2 font-medium">Stove Power (kW)</label>
+        <label className="block mb-2 font-medium">Stove power (kW)</label>
         <input
           type="number"
           min="2"
@@ -79,13 +78,13 @@ const Sauna = () => {
               onClick={() => setUseMeasurements(false)}
               className={`px-4 py-2 rounded ${!useMeasurements ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
             >
-              Room Volume
+              Room volume
             </button>
             <button
               onClick={() => setUseMeasurements(true)}
               className={`px-4 py-2 rounded ${useMeasurements ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
             >
-              Room Measurements
+              Room measurements
             </button>
           </div>
         </div>
@@ -93,7 +92,7 @@ const Sauna = () => {
         {/* Conditional rendering for volume / measurements */}
         {!useMeasurements ? (
           <div className="mt-4">
-            <label className="block mb-2 font-medium">Room Volume (m³)</label>
+            <label className="block mb-2 font-medium">Room volume (m³)</label>
             <input
               type="number"
               min="5"
@@ -106,7 +105,7 @@ const Sauna = () => {
           </div>
         ) : (
           <div className="mt-4">
-            <label className="block mb-2 font-medium">Room Measurements (meters)</label>
+            <label className="block mb-2 font-medium">Room measurements (meters)</label>
             <div className="grid grid-cols-3 gap-2">
               <input
                 type="number"
@@ -137,14 +136,14 @@ const Sauna = () => {
               />
             </div>
             <div className="flex justify-between text-gray-600">
-              <p>Room Volume: {calculatedVolume.toFixed(2)} m³</p>
+              <p>Room volume: {calculatedVolume.toFixed(2)} m³</p>
               <p>Typical: 4-10 m³</p>
             </div>
           </div>
         )}
 
         {/* Temperature */}
-        <label className="block mt-4 mb-2 font-medium">Target Temperature (°C)</label>
+        <label className="block mt-4 mb-2 font-medium">Target temperature (°C)</label>
         <input
           type="range"
           min="60"
@@ -160,7 +159,7 @@ const Sauna = () => {
         </div>
 
         {/* Duration */}
-        <label className="block mt-4 mb-2 font-medium">Duration After Pre-heating (hours)</label>
+        <label className="block mt-4 mb-2 font-medium">Sauna time (hours)</label>
         <input
           type="range"
           min="0.25"
@@ -190,9 +189,9 @@ const Sauna = () => {
 
         {/* Results */}
         <div className="mt-6 p-4 bg-gray-100 rounded">
-          <p className="text-lg font-bold">Pre-heat Duration: {preHeatDuration.toFixed(2)} hours</p>
-          <p className="text-lg font-bold">Total Duration: {totalDuration.toFixed(2)} hours</p>
-          <p className="text-lg font-bold">Estimated Consumption: {consumption.toFixed(2)} kWh</p>
+          <p className="text-lg font-bold">Pre-heat time: {preHeatDuration.toFixed(2)} hours</p>
+          <p className="text-lg font-bold">Total time: {totalDuration.toFixed(2)} hours</p>
+          <p className="text-lg font-bold">Estimated consumption: {consumption.toFixed(2)} kWh</p>
           <p className="text-sm text-gray-600">
             This is about {(consumption / averageMonthlyUse * 100).toFixed(1)}% of the average monthly electricity consumption in Finland.
           </p>
@@ -210,7 +209,7 @@ const Sauna = () => {
 
         {/* Toast */}
         {showToast && (
-          <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
+          <div className="fixed top-50 right-50 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
             Saved successfully!
           </div>
         )}
