@@ -1,24 +1,13 @@
-import logo from "./logo.svg";
+import React from "react";
+import Navbar from "./components/NavBar";
 
-function Layout(){
-    return (
-        <div className="App bg-violet-500">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p className="text-amber-400">
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
-    )
-}
+const Layout = ({ children }) => {
+  return (
+    <div>
+      <Navbar />
+      <div className="content">{children}</div>
+    </div>
+  );
+};
 
-export default Layout
+export default Layout;

@@ -38,19 +38,28 @@ const BarChart = () => {
                         label: 'kWh',
                         data: consumptionData,
                         backgroundColor: [
-                            'rgba(75, 192, 192, 0.6)',
-                            'rgba(153, 102, 255, 0.6)',
-                            'rgba(255, 159, 64, 0.6)'
+                            'rgba(75, 192, 192, 0.6)',  // Teal
+                            'rgba(153, 102, 255, 0.6)', // Purple
+                            'rgba(255, 159, 64, 0.6)',  // Orange
+                            'rgba(217, 255, 64, 0.6)',  // Yellow-Green
+                            'rgba(255, 124, 87, 0.6)',  // Salmon
+                            'rgba(54, 162, 235, 0.6)',  // Light Blue
+                            'rgba(201, 203, 207, 0.6)'  // Light Gray
                         ],
                         borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
+                            'rgba(75, 192, 192, 1)',  // Teal
+                            'rgba(153, 102, 255, 1)', // Purple
+                            'rgba(255, 159, 64, 1)',  // Orange
+                            'rgba(96, 113, 28, 1)',   // Yellow-Green
+                            'rgba(255, 124, 87, 1)',  // Salmon
+                            'rgba(54, 162, 235, 1)',  // Light Blue
+                            'rgba(128, 128, 128, 1)'  // Gray
                         ],
                         borderWidth: 1
                     }
                 ]
             })
+
         }
         fetchData()
     }, [])

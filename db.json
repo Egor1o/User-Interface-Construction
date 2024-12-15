@@ -2,11 +2,11 @@
   "consumption": [
     {
       "name": "TV",
-      "consumption": "21.780000000000005",
+      "consumption": 76.5,
       "id": "7cab"
     },
     {
-      "name": "Fridge",
+      "name": "Refrigerator",
       "consumption": 80.2,
       "id": "a27e"
     },
@@ -14,6 +14,21 @@
       "name": "Microwave",
       "consumption": 10.5,
       "id": "9995"
+    },
+    {
+      "name": "Drying-cabinet",
+      "consumption": 35.5,
+      "id": "9996"
+    },
+    {
+      "name": "Sauna",
+      "consumption": 15,
+      "id": "99d8"
+    },
+    {
+      "name": "Dishwasher",
+      "consumption": 30.24,
+      "id": "9997"
     }
   ]
 }
