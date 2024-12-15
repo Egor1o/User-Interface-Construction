@@ -1,6 +1,7 @@
 import React from "react";
 import BarChart from "./components/BarChart";
 import PieChart from "./components/PieChart";
+import CostChart from './components/CostChart'
 
 const Dashboard = () => {
   return (
@@ -93,6 +94,7 @@ const Dashboard = () => {
 
       <div className="flex flex-row flex-wrap gap-4">
         <BarChart />
+        <CostChart />
         <PieChart />
       </div>
     </div>
